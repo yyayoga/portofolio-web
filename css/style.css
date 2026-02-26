@@ -1,0 +1,333 @@
+/* ═══════════════════════════════════════════
+   CUSTOM STYLES — Coca-Cola Portfolio
+   ═══════════════════════════════════════════ */
+
+/* ——— Global Reset ——— */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Remove focus outline for mouse users, keep for keyboard */
+:focus-visible {
+    outline: 2px solid #AF9FFF;
+    outline-offset: 2px;
+}
+
+/* Text Selection Highlight - Phantom Theme */
+::selection {
+    background-color: #AF9FFF;
+    color: #141218;
+}
+
+::-moz-selection {
+    background-color: #AF9FFF;
+    color: #141218;
+}
+
+
+/* ═══════════════════════════════════════════
+   ANIMATIONS — Keyframes
+   ═══════════════════════════════════════════ */
+
+/* Fade-up entrance */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-up {
+    opacity: 0;
+    animation: fadeUp 0.8s ease-out forwards;
+}
+
+/* Slow spin for decorative ring */
+@keyframes spinSlow {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.animate-spin-slow {
+    animation: spinSlow 25s linear infinite;
+}
+
+/* Floating badge bounce */
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+.floating-badge {
+    animation: float 3s ease-in-out infinite;
+}
+
+/* Scroll arrow bounce */
+@keyframes scrollBounce {
+
+    0%,
+    100% {
+        transform: rotate(45deg) translateY(0);
+    }
+
+    50% {
+        transform: rotate(45deg) translateY(6px);
+    }
+}
+
+.scroll-arrow {
+    animation: scrollBounce 2s ease-in-out infinite;
+}
+
+/* Typing cursor blink */
+@keyframes blink {
+
+    0%,
+    100% {
+        border-right-color: #AF9FFF;
+    }
+
+    50% {
+        border-right-color: transparent;
+    }
+}
+
+.typed-cursor::after {
+    content: "";
+    display: inline-block;
+    width: 2px;
+    height: 1.1em;
+    background-color: #AF9FFF;
+    margin-left: 2px;
+    vertical-align: text-bottom;
+    animation: blink 0.8s step-end infinite;
+}
+
+/* Blob pulse */
+@keyframes blobPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.6;
+    }
+
+    50% {
+        transform: scale(1.15);
+        opacity: 1;
+    }
+}
+
+.hero-blob {
+    animation: blobPulse 6s ease-in-out infinite;
+}
+
+.hero-blob:nth-child(2) {
+    animation-delay: 3s;
+}
+
+
+/* ═══════════════════════════════════════════
+   NAV LINK HOVER UNDERLINE
+   ═══════════════════════════════════════════ */
+
+.nav-link::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #AF9FFF;
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+}
+
+
+/* ═══════════════════════════════════════════
+   MOBILE MENU
+   ═══════════════════════════════════════════ */
+
+.mobile-menu.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+
+/* ═══════════════════════════════════════════
+   SECTION REVEAL (Scroll animations)
+   ═══════════════════════════════════════════ */
+
+.reveal-section {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.reveal-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* ═══════════════════════════════════════════
+   EXPERIENCE CARD TIMELINE DOT
+   ═══════════════════════════════════════════ */
+
+.experience-card {
+    position: relative;
+}
+
+
+/* ═══════════════════════════════════════════
+   PROJECT CARD OVERLAY (Optional)
+   ═══════════════════════════════════════════ */
+
+.project-card .aspect-video {
+    position: relative;
+}
+
+.project-card .aspect-video::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.15), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.project-card:hover .aspect-video::after {
+    opacity: 1;
+}
+
+
+/* ═══════════════════════════════════════════
+   SKILL CARD ICON HOVER
+   ═══════════════════════════════════════════ */
+
+.skill-card:hover .fa-brands,
+.skill-card:hover .fa-solid {
+    color: #AF9FFF;
+    transition: color 0.3s ease;
+}
+
+
+/* ═══════════════════════════════════════════
+   SOCIAL ICON PULSE
+   ═══════════════════════════════════════════ */
+
+.social-icon:hover {
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.15);
+}
+
+
+/* ═══════════════════════════════════════════
+   SCROLLBAR CUSTOM (Webkit)
+   ═══════════════════════════════════════════ */
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #141218;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #2d2540;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #AF9FFF;
+}
+
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE TWEAKS
+   ═══════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+    .hero-visual .absolute.-bottom-2 {
+        right: 50%;
+        transform: translateX(50%);
+    }
+}
+
+
+/* ═══════════════════════════════════════════
+   DARK MODE
+   ═══════════════════════════════════════════ */
+
+/* Toggle icon visibility */
+.dark .dark-icon {
+    display: none;
+}
+
+.dark .light-icon {
+    display: inline-block !important;
+    color: #AF9FFF;
+    /* phantom-purple */
+}
+
+/* Dark mode toggle rotation animation */
+#dark-toggle {
+    transition: transform 0.4s ease, background-color 0.3s ease;
+}
+
+#dark-toggle:active {
+    transform: rotate(180deg) scale(0.9);
+}
+
+/* Dark scrollbar */
+.dark ::-webkit-scrollbar-track {
+    background: #141218;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+    background: #2d2540;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+    background: #AF9FFF;
+}
+
+/* Dark mode nav link underline */
+.dark .nav-link::after {
+    background-color: #AF9FFF;
+}
+
+/* Dark mode skill card icon hover */
+.dark .skill-card:hover .fa-brands,
+.dark .skill-card:hover .fa-solid {
+    color: #AF9FFF;
+}
