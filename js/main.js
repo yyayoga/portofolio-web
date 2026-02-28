@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const typedEl = document.getElementById('typed-role');
     const roles = [
         'Frontend Developer',
+        'Backend Developer',
         'UI/UX Enthusiast',
         'Creative Thinker',
         'Problem Solver',
@@ -270,6 +271,122 @@ document.addEventListener('DOMContentLoaded', () => {
         darkToggle.addEventListener('click', () => {
             const isDark = htmlEl.classList.toggle('dark');
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        });
+    }
+
+
+    /* ───────────────────────────────────────────
+       10. FLOATING MUSIC PLAYER
+       ─ Playlist menggunakan file dari folder assets/
+       ─ Untuk menambah/mengganti lagu, edit array "playlist" di bawah.
+    ─────────────────────────────────────────── */
+    const floatingPlayer = document.getElementById('floating-music-player');
+    const floatingAudio = document.getElementById('floating-audio');
+    const floatingMusicToggle = document.getElementById('floating-music-toggle');
+    const floatingMusicIcon = document.getElementById('floating-music-icon');
+    const musicTrackName = document.getElementById('music-track-name');
+    const musicExpandToggle = document.getElementById('music-expand-toggle');
+    const musicExpandIcon = document.getElementById('music-expand-icon');
+    const musicPrev = document.getElementById('music-prev');
+    const musicNext = document.getElementById('music-next');
+
+    // ── Playlist: tambah / hapus lagu di sini ──
+    const playlist = [
+        { title: 'But If You Go',    src: 'assets/But If You Go - Nathaniel Constantin.mp3' },
+        { title: 'I Dont Love You',  src: 'assets/I Dont Love You - My Chemical Romance.mp3' },
+        { title: 'Hurricane',        src: 'assets/Hurricane - I Prevail.mp3' },
+        { title: 'Teardrops',        src: 'assets/Teardrops - Bring Me the Horizon.mp3' },
+        { title: 'xx',               src: 'assets/xx - The Millenial Club.mp3' },
+    ];
+
+    let currentTrackIndex = 0;
+
+    /* — helpers — */
+
+    function loadTrack(index) {
+        if (!floatingAudio || !playlist.length) return;
+        currentTrackIndex = ((index % playlist.length) + playlist.length) % playlist.length;
+        const track = playlist[currentTrackIndex];
+        floatingAudio.src = track.src;
+        floatingAudio.load();
+        if (musicTrackName) musicTrackName.textContent = track.title;
+    }
+
+    function syncFloatingPlayerUI(isPlaying) {
+        if (!floatingPlayer || !floatingMusicToggle || !floatingMusicIcon) return;
+        floatingPlayer.classList.toggle('is-playing', isPlaying);
+        floatingMusicToggle.setAttribute('aria-pressed', String(isPlaying));
+        floatingMusicToggle.setAttribute('aria-label', isPlaying ? 'Pause music' : 'Play music');
+        // Switch icon class: fa-play ↔ fa-pause
+        floatingMusicIcon.className = isPlaying
+            ? 'fa-solid fa-pause'
+            : 'fa-solid fa-play';
+    }
+
+    async function playCurrentTrack() {
+        try {
+            await floatingAudio.play();
+            syncFloatingPlayerUI(true);
+        } catch (_) {
+            syncFloatingPlayerUI(false);
+        }
+    }
+
+    /* — init — */
+
+    if (floatingAudio && floatingMusicToggle) {
+        loadTrack(0);
+
+        floatingMusicToggle.addEventListener('click', async () => {
+            if (floatingAudio.paused) {
+                await playCurrentTrack();
+            } else {
+                floatingAudio.pause();
+                syncFloatingPlayerUI(false);
+            }
+        });
+
+        floatingAudio.addEventListener('ended', () => {
+            loadTrack(currentTrackIndex + 1);
+            playCurrentTrack();
+        });
+
+        floatingAudio.addEventListener('play', () => syncFloatingPlayerUI(true));
+        floatingAudio.addEventListener('pause', () => syncFloatingPlayerUI(false));
+
+        syncFloatingPlayerUI(false);
+    }
+
+    /* — Prev / Next — */
+
+    if (musicPrev) {
+        musicPrev.addEventListener('click', () => {
+            const wasPlaying = floatingAudio && !floatingAudio.paused;
+            loadTrack(currentTrackIndex - 1);
+            if (wasPlaying) playCurrentTrack();
+        });
+    }
+
+    if (musicNext) {
+        musicNext.addEventListener('click', () => {
+            const wasPlaying = floatingAudio && !floatingAudio.paused;
+            loadTrack(currentTrackIndex + 1);
+            if (wasPlaying) playCurrentTrack();
+        });
+    }
+
+    /* — Expand / Collapse (+/−) — */
+
+    if (musicExpandToggle && floatingPlayer) {
+        musicExpandToggle.addEventListener('click', () => {
+            const isExpanded = floatingPlayer.classList.toggle('is-expanded');
+            musicExpandToggle.setAttribute('aria-label', isExpanded ? 'Collapse player' : 'Expand player');
+            // Toggle icon: + ↔ −
+            if (musicExpandIcon) {
+                musicExpandIcon.className = isExpanded
+                    ? 'fa-solid fa-minus'
+                    : 'fa-solid fa-plus';
+            }
         });
     }
 
