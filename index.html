@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bramantya H.Yoga — Portfolio</title>
+    <title>ybram-portofolio</title>
     <meta name="description" content="Personal portfolio of Bramantya H.Y. — Frontend Developer & Creative Thinker." />
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -41,7 +41,7 @@
         rel="stylesheet" />
 
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css" />
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css" />
@@ -385,136 +385,159 @@
     <section id="projects" class="py-24 bg-coca-gray dark:bg-dark-surface reveal-section">
         <div class="max-w-7xl mx-auto px-6">
             <!-- Section Header -->
-            <div class="text-center mb-16">
-                <p class="text-sm font-semibold tracking-widest uppercase text-coca-red mb-2">What I've Built</p>
-                <h2 class="font-heading text-4xl lg:text-5xl font-bold">Featured <span
-                        class="text-coca-red">Projects</span></h2>
+            <div class="text-center mb-20">
+                <p class="text-sm font-semibold tracking-widest uppercase text-coca-red mb-3">Creative Solutions</p>
+                <h2 class="font-heading text-4xl lg:text-6xl font-black mb-4">Things I've <span
+                        class="text-coca-red">Built</span></h2>
+                <p class="text-coca-dark/60 dark:text-white/60 max-w-md mx-auto text-sm">From ML models to full-stack applications. Each project crafted with precision and creativity.</p>
             </div>
 
-            <!-- Project Grid -->
-            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Project Showcase Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
 
                 <!-- Project Card 1 -->
-                <div
-                    class="project-card group bg-white dark:bg-dark-card rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-                    <div class="aspect-video overflow-hidden">
-                        <img src="img/project1.png" alt="Project 1 thumbnail"
-                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                <div class="project-showcase group relative bg-white dark:bg-dark-card rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-3">
+                    <!-- Image Container -->
+                    <div class="relative h-56 overflow-hidden bg-gradient-to-br from-coca-red/20 to-coca-red/5 dark:from-coca-red/30 dark:to-coca-red/10">
+                        <img src="img/project1.png" alt="Student Stress Classification" class="w-full h-full object-cover group-hover:scale-125 transition-transform duration-700 opacity-80" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-coca-dark/40 via-transparent to-transparent"></div>
                     </div>
+                    
+                    <!-- Content -->
                     <div class="p-6">
-                        <h3 class="font-heading text-lg font-bold mb-2 group-hover:text-coca-red transition-colors">
-                            Student Stress Classification Using KNN and Decision Tree</h3>
-                        <p class="text-sm text-coca-dark/60 dark:text-white/60 leading-relaxed mb-4">A student stress classification system using KNN and Decision Tree algorithms based on daily activity data. The project focuses on model comparison and performance evaluation.</p>
-                        <div class="flex items-center gap-3 text-coca-dark/40 dark:text-white/40">
-                            <i class="fa-brands fa-python text-lg" title="Python"></i>
-                            <i class="fa-brands fa-kaggle text-lg" title="Kaggle"></i>
-                            <i class="fa-solid fa-brain text-lg" title="Machine Learning"></i>
+                        <span class="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-coca-red/20 text-coca-red mb-3 group-hover:bg-coca-red/40 transition-colors duration-300">Machine Learning</span>
+                        <h3 class="font-heading text-lg font-bold mb-3 group-hover:text-coca-red transition-colors duration-300">Student Stress Classification</h3>
+                        <p class="text-sm text-coca-dark/60 dark:text-white/60 mb-4 leading-relaxed">ML system using KNN & Decision Tree for stress prediction based on daily activity.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tech-badge">Python</span>
+                            <span class="tech-badge">Kaggle</span>
+                            <span class="tech-badge">pandas</span>
                         </div>
+                        <a href="#" class="inline-flex items-center gap-2 text-coca-red font-semibold text-sm hover:gap-3 transition-all duration-300">
+                            View Project <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </a>
                     </div>
                 </div>
 
                 <!-- Project Card 2 -->
-                <div
-                    class="project-card group bg-white dark:bg-dark-card rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-                    <div class="aspect-video overflow-hidden">
-                        <img src="https://placehold.co/600x340/1E1E1E/FFFFFF?text=PROJECT+2" alt="Project 2 thumbnail"
-                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                <div class="project-showcase group relative bg-white dark:bg-dark-card rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-3">
+                    <div class="relative h-56 overflow-hidden bg-gradient-to-br from-coca-red/20 to-coca-red/5 dark:from-coca-red/30 dark:to-coca-red/10">
+                        <img src="img/impal.png" alt="CompuPay" class="w-full h-full object-cover group-hover:scale-125 transition-transform duration-700 opacity-80" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-coca-dark/40 via-transparent to-transparent"></div>
                     </div>
                     <div class="p-6">
-                        <h3 class="font-heading text-lg font-bold mb-2 group-hover:text-coca-red transition-colors">
-                            Weather Forecast App</h3>
-                        <p class="text-sm text-coca-dark/60 dark:text-white/60 leading-relaxed mb-4">A beautiful weather
-                            app with animated backgrounds that change based on real-time conditions.</p>
-                        <div class="flex items-center gap-3 text-coca-dark/40 dark:text-white/40">
-                            <i class="fa-brands fa-js text-lg" title="JavaScript"></i>
-                            <i class="fa-brands fa-html5 text-lg" title="HTML5"></i>
-                            <i class="fa-brands fa-css3-alt text-lg" title="CSS3"></i>
-                            <i class="fa-solid fa-cloud text-lg" title="API"></i>
+                        <span class="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-coca-red/20 text-coca-red mb-3 group-hover:bg-coca-red/40 transition-colors duration-300">Web App</span>
+                        <h3 class="font-heading text-lg font-bold mb-3 group-hover:text-coca-red transition-colors duration-300">CompuPay – Payroll System</h3>
+                        <p class="text-sm text-coca-dark/60 dark:text-white/60 mb-4 leading-relaxed">Complete payroll management with role-based access, deductions, and reporting.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tech-badge">JavaScript</span>
+                            <span class="tech-badge">MySQL</span>
+                            <span class="tech-badge">Tailwind</span>
                         </div>
+                        <a href="#" class="inline-flex items-center gap-2 text-coca-red font-semibold text-sm hover:gap-3 transition-all duration-300">
+                            View Project <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </a>
                     </div>
                 </div>
 
                 <!-- Project Card 3 -->
-                <div
-                    class="project-card group bg-white dark:bg-dark-card rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-                    <div class="aspect-video overflow-hidden">
-                        <img src="https://placehold.co/600x340/F5F5F5/1E1E1E?text=PROJECT+3" alt="Project 3 thumbnail"
-                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                <div class="project-showcase group relative bg-white dark:bg-dark-card rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-3">
+                    <div class="relative h-56 overflow-hidden bg-gradient-to-br from-coca-red/20 to-coca-red/5 dark:from-coca-red/30 dark:to-coca-red/10">
+                        <img src="img/aka.jpeg" alt="CompuPay" class="w-full h-full object-cover group-hover:scale-125 transition-transform duration-700 opacity-80" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-coca-dark/40 via-transparent to-transparent"></div>
                     </div>
                     <div class="p-6">
-                        <h3 class="font-heading text-lg font-bold mb-2 group-hover:text-coca-red transition-colors">Task
-                            Manager Pro</h3>
-                        <p class="text-sm text-coca-dark/60 dark:text-white/60 leading-relaxed mb-4">A productivity tool
-                            with drag-and-drop task boards, deadlines, and team collaboration features.</p>
-                        <div class="flex items-center gap-3 text-coca-dark/40 dark:text-white/40">
-                            <i class="fa-brands fa-vuejs text-lg" title="Vue.js"></i>
-                            <i class="fa-brands fa-python text-lg" title="Python"></i>
-                            <i class="fa-solid fa-database text-lg" title="PostgreSQL"></i>
+                        <span class="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-coca-red/20 text-coca-red mb-3 group-hover:bg-coca-red/40 transition-colors duration-300">Algorithm</span>
+                        <h3 class="font-heading text-lg font-bold mb-3 group-hover:text-coca-red transition-colors duration-300">Algorithm Comparative Analysis</h3>
+                        <p class="text-sm text-coca-dark/60 dark:text-white/60 mb-4 leading-relaxed">Performance comparison of iterative vs recursive digit counting with complexity analysis.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tech-badge">C++</span>
+                            <span class="tech-badge">Git</span>
+                            <span class="tech-badge">GitHub</span>
                         </div>
+                        <a href="#" class="inline-flex items-center gap-2 text-coca-red font-semibold text-sm hover:gap-3 transition-all duration-300">
+                            View Project <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </a>
                     </div>
                 </div>
 
                 <!-- Project Card 4 -->
-                <div
-                    class="project-card group bg-white dark:bg-dark-card rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-                    <div class="aspect-video overflow-hidden">
-                        <img src="https://placehold.co/600x340/000000/F40009?text=PROJECT+4" alt="Project 4 thumbnail"
-                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                <div class="project-showcase group relative bg-white dark:bg-dark-card rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-3">
+                    <div class="relative h-56 overflow-hidden bg-gradient-to-br from-coca-red/20 to-coca-red/5 dark:from-coca-red/30 dark:to-coca-red/10">
+                        <div class="w-full h-full bg-gradient-to-br from-blue-400 to-indigo-600 flex items-center justify-center">
+                            <i class="fa-solid fa-briefcase text-white text-6xl opacity-20"></i>
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-coca-dark/40 via-transparent to-transparent"></div>
                     </div>
                     <div class="p-6">
-                        <h3 class="font-heading text-lg font-bold mb-2 group-hover:text-coca-red transition-colors">
-                            Portfolio Website</h3>
-                        <p class="text-sm text-coca-dark/60 dark:text-white/60 leading-relaxed mb-4">A sleek personal
-                            portfolio built with modern CSS animations and responsive design patterns.</p>
-                        <div class="flex items-center gap-3 text-coca-dark/40 dark:text-white/40">
-                            <i class="fa-brands fa-html5 text-lg" title="HTML5"></i>
-                            <i class="fa-brands fa-css3-alt text-lg" title="CSS3"></i>
-                            <i class="fa-brands fa-js text-lg" title="JavaScript"></i>
+                        <span class="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-coca-red/20 text-coca-red mb-3 group-hover:bg-coca-red/40 transition-colors duration-300">Portfolio</span>
+                        <h3 class="font-heading text-lg font-bold mb-3 group-hover:text-coca-red transition-colors duration-300">Portfolio Website</h3>
+                        <p class="text-sm text-coca-dark/60 dark:text-white/60 mb-4 leading-relaxed">Modern, responsive portfolio with smooth animations and dark mode support.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tech-badge">HTML5</span>
+                            <span class="tech-badge">CSS3</span>
+                            <span class="tech-badge">JavaScript</span>
                         </div>
+                        <a href="#" class="inline-flex items-center gap-2 text-coca-red font-semibold text-sm hover:gap-3 transition-all duration-300">
+                            View Project <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </a>
                     </div>
                 </div>
 
                 <!-- Project Card 5 -->
-                <div
-                    class="project-card group bg-white dark:bg-dark-card rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-                    <div class="aspect-video overflow-hidden">
-                        <img src="https://placehold.co/600x340/F40009/000000?text=PROJECT+5" alt="Project 5 thumbnail"
-                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                <div class="project-showcase group relative bg-white dark:bg-dark-card rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-3">
+                    <div class="relative h-56 overflow-hidden bg-gradient-to-br from-coca-red/20 to-coca-red/5 dark:from-coca-red/30 dark:to-coca-red/10">
+                        <div class="w-full h-full bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center">
+                            <i class="fa-solid fa-chart-line text-white text-6xl opacity-20"></i>
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-coca-dark/40 via-transparent to-transparent"></div>
                     </div>
                     <div class="p-6">
-                        <h3 class="font-heading text-lg font-bold mb-2 group-hover:text-coca-red transition-colors">
-                            Social Media Analytics</h3>
-                        <p class="text-sm text-coca-dark/60 dark:text-white/60 leading-relaxed mb-4">An analytics
-                            platform that visualizes social media metrics with interactive charts and reports.</p>
-                        <div class="flex items-center gap-3 text-coca-dark/40 dark:text-white/40">
-                            <i class="fa-brands fa-react text-lg" title="React"></i>
-                            <i class="fa-solid fa-chart-line text-lg" title="D3.js"></i>
-                            <i class="fa-brands fa-node-js text-lg" title="Node.js"></i>
+                        <span class="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-coca-red/20 text-coca-red mb-3 group-hover:bg-coca-red/40 transition-colors duration-300">Analytics</span>
+                        <h3 class="font-heading text-lg font-bold mb-3 group-hover:text-coca-red transition-colors duration-300">Social Media Analytics</h3>
+                        <p class="text-sm text-coca-dark/60 dark:text-white/60 mb-4 leading-relaxed">Interactive analytics dashboard visualizing social metrics with real-time charts.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tech-badge">React</span>
+                            <span class="tech-badge">D3.js</span>
+                            <span class="tech-badge">Node.js</span>
                         </div>
+                        <a href="#" class="inline-flex items-center gap-2 text-coca-red font-semibold text-sm hover:gap-3 transition-all duration-300">
+                            View Project <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </a>
                     </div>
                 </div>
 
                 <!-- Project Card 6 -->
-                <div
-                    class="project-card group bg-white dark:bg-dark-card rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-                    <div class="aspect-video overflow-hidden">
-                        <img src="https://placehold.co/600x340/1E1E1E/F40009?text=PROJECT+6" alt="Project 6 thumbnail"
-                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                <div class="project-showcase group relative bg-white dark:bg-dark-card rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-3">
+                    <div class="relative h-56 overflow-hidden bg-gradient-to-br from-coca-red/20 to-coca-red/5 dark:from-coca-red/30 dark:to-coca-red/10">
+                        <div class="w-full h-full bg-gradient-to-br from-pink-400 to-rose-600 flex items-center justify-center">
+                            <i class="fa-solid fa-comments text-white text-6xl opacity-20"></i>
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-coca-dark/40 via-transparent to-transparent"></div>
                     </div>
                     <div class="p-6">
-                        <h3 class="font-heading text-lg font-bold mb-2 group-hover:text-coca-red transition-colors">Chat
-                            Application</h3>
-                        <p class="text-sm text-coca-dark/60 dark:text-white/60 leading-relaxed mb-4">A real-time
-                            messaging app with encrypted channels, file sharing, and presence indicators.</p>
-                        <div class="flex items-center gap-3 text-coca-dark/40 dark:text-white/40">
-                            <i class="fa-brands fa-react text-lg" title="React"></i>
-                            <i class="fa-solid fa-bolt text-lg" title="Socket.io"></i>
-                            <i class="fa-brands fa-node-js text-lg" title="Express"></i>
-                            <i class="fa-solid fa-database text-lg" title="Redis"></i>
+                        <span class="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-coca-red/20 text-coca-red mb-3 group-hover:bg-coca-red/40 transition-colors duration-300">Real-time App</span>
+                        <h3 class="font-heading text-lg font-bold mb-3 group-hover:text-coca-red transition-colors duration-300">Chat Application</h3>
+                        <p class="text-sm text-coca-dark/60 dark:text-white/60 mb-4 leading-relaxed">Real-time messaging with encrypted channels, file sharing, and presence indicators.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tech-badge">React</span>
+                            <span class="tech-badge">Socket.io</span>
+                            <span class="tech-badge">Redis</span>
                         </div>
+                        <a href="#" class="inline-flex items-center gap-2 text-coca-red font-semibold text-sm hover:gap-3 transition-all duration-300">
+                            View Project <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </a>
                     </div>
                 </div>
 
+            </div>
+
+            <!-- CTA Section -->
+            <div class="mt-20 text-center">
+                <p class="text-coca-dark/60 dark:text-white/60 mb-6 text-sm font-medium">Want to see more or thinking of a project?</p>
+                <a href="#contact" class="inline-flex items-center gap-2 bg-coca-red text-white px-8 py-4 rounded-full font-bold shadow-lg shadow-coca-red/30 hover:shadow-coca-red/50 hover:scale-105 transition-all duration-300">
+                    Let's Work Together <i class="fa-solid fa-rocket text-sm"></i>
+                </a>
             </div>
         </div>
     </section>
