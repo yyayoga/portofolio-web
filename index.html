@@ -43,12 +43,20 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css" />
 
+    <!-- GSAP + ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css" />
 </head>
 
 <body
     class="font-body text-coca-dark bg-white antialiased dark:bg-phantom-dark dark:text-white transition-colors duration-300">
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-ring" id="cursor-ring"></div>
 
     <!-- 1. HEADER & NAVIGATION -->
     <header id="navbar"
@@ -224,155 +232,194 @@
     </section>
 
     <!-- 4. EXPERIENCE -->
-    <section id="experience" class="relative py-24 bg-white dark:bg-dark-bg reveal-section">
-        <!-- Vanta.NET Background -->
-        <div id="vanta-bg-experience" class="absolute inset-0 pointer-events-none"></div>
-        
-        <div class="max-w-7xl mx-auto px-6 relative z-10">
+    <section id="experience" class="relative py-28 bg-white dark:bg-dark-bg overflow-hidden">
+        <div class="max-w-5xl mx-auto px-6 relative z-10">
             <!-- Section Header -->
-            <div class="text-center mb-16">
-                <p class="text-sm font-semibold tracking-widest uppercase text-coca-red mb-2">My Journey</p>
-                <h2 class="font-heading text-4xl lg:text-5xl font-bold">Work <span
-                        class="text-coca-red">Experience</span></h2>
+            <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-20 gap-4">
+                <div>
+                    <p class="text-sm font-semibold tracking-widest uppercase text-coca-red mb-3">Experience</p>
+                    <h2 class="font-heading text-4xl lg:text-6xl font-black leading-tight">What I've<br><span
+                            class="text-coca-red">Done</span></h2>
+                </div>
+                <p class="text-sm text-coca-dark/40 dark:text-white/30 max-w-[220px] hidden lg:block text-right">
+                    Hover to preview<br>Click to expand details</p>
             </div>
 
-            <!-- Experience List -->
-            <div class="space-y-10 max-w-5xl mx-auto">
+            <!-- Floating Image Preview (desktop) -->
+            <div class="exp-img-preview" id="expImgPreview">
+                <img src="" alt="" id="expPreviewImg" />
+            </div>
 
-                <!-- Experience Item 1 -->
-                <div
-                    class="experience-card group flex flex-col md:flex-row gap-6 bg-coca-gray dark:bg-dark-card rounded-2xl p-6 lg:p-8 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-                    <!-- Left: Details -->
-                    <div class="flex-1">
-                        <span
-                            class="inline-block text-xs font-semibold tracking-wider uppercase text-coca-red bg-coca-red/10 px-3 py-1 rounded-full mb-3">2026
-                            — Present</span>
-                        <h3 class="font-heading text-xl font-bold mb-1">Practicum Assistant</h3>
-                        <p class="text-sm text-coca-dark/50 dark:text-white/50 font-medium mb-4">Informatics Laboratory
-                        </p>
-                        <ul class="space-y-2 text-sm text-coca-dark/70 dark:text-white/70">
-                            <li class="flex items-start gap-2"><span
-                                    class="mt-1.5 w-1.5 h-1.5 rounded-full bg-coca-red shrink-0"></span>Assisted students during computer network lab sessions, covering IP configuration, subnetting, and routing concepts.</li>
-                            <li class="flex items-start gap-2"><span
-                                    class="mt-1.5 w-1.5 h-1.5 rounded-full bg-coca-red shrink-0"></span>Provided assistance and technical support to students during lab activities.</li>
-                            <li class="flex items-start gap-2"><span
-                                    class="mt-1.5 w-1.5 h-1.5 rounded-full bg-coca-red shrink-0"></span>Assessed and graded each practicum module submitted by students.</li>
-                        </ul>
+            <!-- Experience Rows -->
+            <div class="exp-list-container">
+
+                <!-- Row 1 -->
+                <div class="exp-row" data-img="img/Assistant Practicum img.jpeg">
+                    <div class="exp-row-header">
+                        <div class="exp-row-left">
+                            <span class="exp-row-num">01</span>
+                            <div class="exp-row-info">
+                                <h3 class="exp-row-role">Practicum Assistant</h3>
+                                <p class="exp-row-company">Informatics Laboratory</p>
+                            </div>
+                        </div>
+                        <div class="exp-row-right">
+                            <span class="exp-row-period">2026 — Present</span>
+                            <span class="exp-row-toggle"><i class="fa-solid fa-plus"></i></span>
+                        </div>
                     </div>
-                    <!-- Right: Company Image -->
-                    <div class="shrink-0 flex items-center justify-center">
-                        <div
-                            class="w-60 h-40 md:w-96 md:h-64 rounded-xl overflow-hidden shadow-md bg-white dark:bg-dark-surface">
-                            <img src="img/Assistant Practicum img.jpeg" alt="Company 1"
-                                class="w-full h-full object-cover" />
+                    <div class="exp-row-body">
+                        <div class="exp-row-body-inner">
+                            <div class="exp-row-desc">
+                                <ul>
+                                    <li>Assisted students during computer network lab sessions, covering IP
+                                        configuration, subnetting, and routing concepts.</li>
+                                    <li>Provided assistance and technical support to students during lab activities.
+                                    </li>
+                                    <li>Assessed and graded each practicum module submitted by students.</li>
+                                </ul>
+                            </div>
+                            <div class="exp-row-thumb">
+                                <img src="img/Assistant Practicum img.jpeg" alt="Practicum Assistant" />
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Experience Item 2 -->
-                <div
-                    class="experience-card group flex flex-col md:flex-row gap-6 bg-coca-gray dark:bg-dark-card rounded-2xl p-6 lg:p-8 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-                    <div class="flex-1">
-                        <span
-                            class="inline-block text-xs font-semibold tracking-wider uppercase text-coca-red bg-coca-red/10 px-3 py-1 rounded-full mb-3">2025
-                            — Present</span>
-                        <h3 class="font-heading text-xl font-bold mb-1">Head of Event Creative Division</h3>
-                        <p class="text-sm text-coca-dark/50 dark:text-white/50 font-medium mb-4">Badan Mentoring Telkom University</p>
-                        <ul class="space-y-2 text-sm text-coca-dark/70 dark:text-white/70">
-                            <li class="flex items-start gap-2"><span
-                                    class="mt-1.5 w-1.5 h-1.5 rounded-full bg-coca-red shrink-0"></span>Led the planning and execution of mentoring programs and student development events.</li>
-                            <li class="flex items-start gap-2"><span
-                                    class="mt-1.5 w-1.5 h-1.5 rounded-full bg-coca-red shrink-0"></span>Coordinated event teams to ensure activities were delivered on schedule and aligned with objectives.</li>
-                            <li class="flex items-start gap-2"><span
-                                    class="mt-1.5 w-1.5 h-1.5 rounded-full bg-coca-red shrink-0"></span>Developed event concepts, managed rundowns, and conducted post-event evaluations.</li>
-                        </ul>
+                <div class="exp-separator"></div>
+
+                <!-- Row 2 -->
+                <div class="exp-row" data-img="img/BadanMentoring.jpeg">
+                    <div class="exp-row-header">
+                        <div class="exp-row-left">
+                            <span class="exp-row-num">02</span>
+                            <div class="exp-row-info">
+                                <h3 class="exp-row-role">Head of Event Creative Division</h3>
+                                <p class="exp-row-company">Badan Mentoring Telkom University</p>
+                            </div>
+                        </div>
+                        <div class="exp-row-right">
+                            <span class="exp-row-period">2025 — Present</span>
+                            <span class="exp-row-toggle"><i class="fa-solid fa-plus"></i></span>
+                        </div>
                     </div>
-                    <div class="shrink-0 flex items-center justify-center">
-                        <div
-                            class="w-60 h-40 md:w-96 md:h-64 rounded-xl overflow-hidden shadow-md bg-white dark:bg-dark-surface">
-                            <img src="img/BadanMentoring.jpeg" alt="Company 2"
-                                class="w-full h-full object-cover" />
+                    <div class="exp-row-body">
+                        <div class="exp-row-body-inner">
+                            <div class="exp-row-desc">
+                                <ul>
+                                    <li>Led the planning and execution of mentoring programs and student development
+                                        events.</li>
+                                    <li>Coordinated event teams to ensure activities were delivered on schedule and
+                                        aligned with objectives.</li>
+                                    <li>Developed event concepts, managed rundowns, and conducted post-event
+                                        evaluations.</li>
+                                </ul>
+                            </div>
+                            <div class="exp-row-thumb">
+                                <img src="img/BadanMentoring.jpeg" alt="Badan Mentoring" />
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Experience Item 3 -->
-                <div
-                    class="experience-card group flex flex-col md:flex-row gap-6 bg-coca-gray dark:bg-dark-card rounded-2xl p-6 lg:p-8 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-                    <div class="flex-1">
-                        <span
-                          0  class="inline-block text-xs font-semibold tracking-wider uppercase text-coca-red bg-coca-red/10 px-3 py-1 rounded-full mb-3">2024
-                            — 2025</span>
-                        <h3 class="font-heading text-xl font-bold mb-1">Staff of Operational Team</h3>
-                        <p class="text-sm text-coca-dark/50 dark:text-white/50 font-medium mb-4">Telkom University Education Movement</p>
-                        <ul class="space-y-2 text-sm text-coca-dark/70 dark:text-white/70">
-                            <li class="flex items-start gap-2"><span
-                                    class="mt-1.5 w-1.5 h-1.5 rounded-full bg-coca-red shrink-0"></span>Supported event operations from preparation to execution stages.</li>
-                            <li class="flex items-start gap-2"><span
-                                    class="mt-1.5 w-1.5 h-1.5 rounded-full bg-coca-red shrink-0"></span>Managed logistics, equipment setup, and on-site technical coordination.</li>
-                            <li class="flex items-start gap-2"><span
-                                    class="mt-1.5 w-1.5 h-1.5 rounded-full bg-coca-red shrink-0"></span>Collaborated with cross-functional divisions to ensure smooth event implementation.</li>
-                        </ul>
+                <div class="exp-separator"></div>
+
+                <!-- Row 3 -->
+                <div class="exp-row" data-img="img/TEAM.png">
+                    <div class="exp-row-header">
+                        <div class="exp-row-left">
+                            <span class="exp-row-num">03</span>
+                            <div class="exp-row-info">
+                                <h3 class="exp-row-role">Staff of Operational Team</h3>
+                                <p class="exp-row-company">Telkom University Education Movement</p>
+                            </div>
+                        </div>
+                        <div class="exp-row-right">
+                            <span class="exp-row-period">2024 — 2025</span>
+                            <span class="exp-row-toggle"><i class="fa-solid fa-plus"></i></span>
+                        </div>
                     </div>
-                    <div class="shrink-0 flex items-center justify-center">
-                        <div
-                            class="w-60 h-40 md:w-96 md:h-64 rounded-xl overflow-hidden shadow-md bg-white dark:bg-dark-surface">
-                            <img src="img/TEAM.png" alt="Freelance"
-                                class="w-full h-full object-cover" />
+                    <div class="exp-row-body">
+                        <div class="exp-row-body-inner">
+                            <div class="exp-row-desc">
+                                <ul>
+                                    <li>Supported event operations from preparation to execution stages.</li>
+                                    <li>Managed logistics, equipment setup, and on-site technical coordination.</li>
+                                    <li>Collaborated with cross-functional divisions to ensure smooth event
+                                        implementation.</li>
+                                </ul>
+                            </div>
+                            <div class="exp-row-thumb">
+                                <img src="img/TEAM.png" alt="TEAM" />
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Experience Item 4-->
-                <div
-                    class="experience-card group flex flex-col md:flex-row gap-6 bg-coca-gray dark:bg-dark-card rounded-2xl p-6 lg:p-8 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-                    <div class="flex-1">
-                        <span
-                            class="inline-block text-xs font-semibold tracking-wider uppercase text-coca-red bg-coca-red/10 px-3 py-1 rounded-full mb-3">2024
-                            — 2025</span>
-                        <h3 class="font-heading text-xl font-bold mb-1">Staff of Operational & Infrastucture</h3>
-                        <p class="text-sm text-coca-dark/50 dark:text-white/50 font-medium mb-4">Intelecta Cup</p>
-                        <ul class="space-y-2 text-sm text-coca-dark/70 dark:text-white/70">
-                            <li class="flex items-start gap-2"><span
-                                    class="mt-1.5 w-1.5 h-1.5 rounded-full bg-coca-red shrink-0"></span>Ensured infrastructure and facility readiness throughout the event.</li>
-                            <li class="flex items-start gap-2"><span
-                                    class="mt-1.5 w-1.5 h-1.5 rounded-full bg-coca-red shrink-0"></span>Organized venue layout, technical requirements, and competition equipment.</li>
-                            <li class="flex items-start gap-2"><span
-                                    class="mt-1.5 w-1.5 h-1.5 rounded-full bg-coca-red shrink-0"></span>Conducted equipment checks and maintenance before and during the event.</li>
-                        </ul>
+                <div class="exp-separator"></div>
+
+                <!-- Row 4 -->
+                <div class="exp-row" data-img="img/intelecta.png">
+                    <div class="exp-row-header">
+                        <div class="exp-row-left">
+                            <span class="exp-row-num">04</span>
+                            <div class="exp-row-info">
+                                <h3 class="exp-row-role">Staff of Operational &amp; Infrastructure</h3>
+                                <p class="exp-row-company">Intelecta Cup</p>
+                            </div>
+                        </div>
+                        <div class="exp-row-right">
+                            <span class="exp-row-period">2024 — 2025</span>
+                            <span class="exp-row-toggle"><i class="fa-solid fa-plus"></i></span>
+                        </div>
                     </div>
-                    <div class="shrink-0 flex items-center justify-center">
-                        <div
-                            class="w-60 h-40 md:w-96 md:h-64 rounded-xl overflow-hidden shadow-md bg-white dark:bg-dark-surface">
-                            <img src="img/intelecta.png" alt="Freelance"
-                                class="w-full h-full object-cover" />
+                    <div class="exp-row-body">
+                        <div class="exp-row-body-inner">
+                            <div class="exp-row-desc">
+                                <ul>
+                                    <li>Ensured infrastructure and facility readiness throughout the event.</li>
+                                    <li>Organized venue layout, technical requirements, and competition equipment.</li>
+                                    <li>Conducted equipment checks and maintenance before and during the event.</li>
+                                </ul>
+                            </div>
+                            <div class="exp-row-thumb">
+                                <img src="img/intelecta.png" alt="Intelecta Cup" />
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Experience Item 5-->
-                <div
-                    class="experience-card group flex flex-col md:flex-row gap-6 bg-coca-gray dark:bg-dark-card rounded-2xl p-6 lg:p-8 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-                    <div class="flex-1">
-                        <span
-                            class="inline-block text-xs font-semibold tracking-wider uppercase text-coca-red bg-coca-red/10 px-3 py-1 rounded-full mb-3">2024
-                            — 2025</span>
-                        <h3 class="font-heading text-xl font-bold mb-1">UI/UX Study Group Member</h3>
-                        <p class="text-sm text-coca-dark/50 dark:text-white/50 font-medium mb-4">Central Computer Improvement</p>
-                        <ul class="space-y-2 text-sm text-coca-dark/70 dark:text-white/70">
-                            <li class="flex items-start gap-2"><span
-                                    class="mt-1.5 w-1.5 h-1.5 rounded-full bg-coca-red shrink-0"></span>Studied UI/UX fundamentals including wireframing, prototyping, and user flow design.</li>
-                            <li class="flex items-start gap-2"><span
-                                    class="mt-1.5 w-1.5 h-1.5 rounded-full bg-coca-red shrink-0"></span>Designed interface prototypes using tools such as Figma.</li>
-                            <li class="flex items-start gap-2"><span
-                                    class="mt-1.5 w-1.5 h-1.5 rounded-full bg-coca-red shrink-0"></span>Participated in design discussions and usability reviews to enhance product experience.</li>
-                        </ul>
+                <div class="exp-separator"></div>
+
+                <!-- Row 5 -->
+                <div class="exp-row" data-img="img/cci.png">
+                    <div class="exp-row-header">
+                        <div class="exp-row-left">
+                            <span class="exp-row-num">05</span>
+                            <div class="exp-row-info">
+                                <h3 class="exp-row-role">UI/UX Study Group Member</h3>
+                                <p class="exp-row-company">Central Computer Improvement</p>
+                            </div>
+                        </div>
+                        <div class="exp-row-right">
+                            <span class="exp-row-period">2024 — 2025</span>
+                            <span class="exp-row-toggle"><i class="fa-solid fa-plus"></i></span>
+                        </div>
                     </div>
-                    <div class="shrink-0 flex items-center justify-center">
-                        <div
-                            class="w-60 h-40 md:w-96 md:h-64 rounded-xl overflow-hidden shadow-md bg-white dark:bg-dark-surface">
-                            <img src="img/cci.png" alt="Freelance"
-                                class="w-full h-full object-cover" />
+                    <div class="exp-row-body">
+                        <div class="exp-row-body-inner">
+                            <div class="exp-row-desc">
+                                <ul>
+                                    <li>Studied UI/UX fundamentals including wireframing, prototyping, and user flow
+                                        design.</li>
+                                    <li>Designed interface prototypes using tools such as Figma.</li>
+                                    <li>Participated in design discussions and usability reviews to enhance product
+                                        experience.</li>
+                                </ul>
+                            </div>
+                            <div class="exp-row-thumb">
+                                <img src="img/cci.png" alt="CCI" />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -687,7 +734,7 @@
     </section>
 
     <!-- 7. CONTACT / CTA -->
-    <section id="contact" class="relative py-28 bg-coca-red overflow-hidden reveal-section">
+    <section id="contact" class="relative py-28 bg-coca-red overflow-hidden reveal-section" data-cursor-invert>
         <!-- Decorative shapes -->
         <div class="absolute inset-0 pointer-events-none">
             <div class="absolute top-0 right-0 w-72 h-72 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/3">
@@ -820,14 +867,12 @@
     <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
     <script>
         let vantaEffectHero;
-        let vantaEffectExperience;
 
         function initVanta() {
             const isDarkMode = document.documentElement.classList.contains('dark');
             const bgColor = isDarkMode ? 0x0 : 0xffffff;
             
             if (vantaEffectHero) vantaEffectHero.destroy();
-            if (vantaEffectExperience) vantaEffectExperience.destroy();
             
             // Hero Section
             vantaEffectHero = VANTA.NET({
@@ -843,22 +888,6 @@
                 points: 15.00,
                 backgroundColor: bgColor
             });
-            
-            // Experience Section
-            vantaEffectExperience = VANTA.NET({
-                el: "#vanta-bg-experience",
-                mouseControls: true,
-                touchControls: true,
-                gyroControls: false,
-                minHeight: 200.00,
-                minWidth: 200.00,
-                scale: 1.00,
-                scaleMobile: 1.00,
-                color: 0x5a4b6a,
-                points: 15.00,
-                backgroundColor: bgColor,
-                opacity: 0.3
-            });
         }
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -867,7 +896,6 @@
             const darkToggle = document.getElementById('dark-toggle');
             if (darkToggle) {
                 darkToggle.addEventListener('click', function() {
-
                     setTimeout(initVanta, 100);
                 });
             }

@@ -295,8 +295,11 @@ document.addEventListener('DOMContentLoaded', () => {
         { title: 'But If You Go',    src: 'assets/But If You Go - Nathaniel Constantin.mp3' },
         { title: 'I Dont Love You',  src: 'assets/I Dont Love You - My Chemical Romance.mp3' },
         { title: 'Hurricane',        src: 'assets/Hurricane - I Prevail.mp3' },
+        { title: 'Ruin The Friendship', src: 'assets/Ruin The Friendship.mp3' },
         { title: 'Teardrops',        src: 'assets/Teardrops - Bring Me the Horizon.mp3' },
+        { title: 'Waiting Room',     src: 'assets/Waiting Room - Phoebe Bridgers.mp3' },
         { title: 'xx',               src: 'assets/xx - The Millenial Club.mp3' },
+        { title: 'Enchanted',        src: 'assets/Taylor Swift - Enchanted.mp3' },
     ];
 
     let currentTrackIndex = 0;
@@ -389,5 +392,245 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+
+    /* ───────────────────────────────────────────
+       11. CUSTOM CURSOR — Phantom Purple
+       ─ Small dot follows mouse instantly.
+       ─ Larger ring trails with smooth lerp.
+       ─ Grows on hover over links, buttons, inputs.
+       ─ Hidden on touch devices (handled by CSS).
+    ─────────────────────────────────────────── */
+
+    const cursorDot  = document.getElementById('cursor-dot');
+    const cursorRing = document.getElementById('cursor-ring');
+
+    if (cursorDot && cursorRing) {
+
+        let mouseX = -100, mouseY = -100;   // current mouse position
+        let ringX  = -100, ringY  = -100;   // ring's lerped position
+        const LERP = 0.15;                  // ring trailing speed (0–1, lower = smoother)
+
+        // ── Update mouse position ──
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+
+            // Dot follows instantly
+            cursorDot.style.left = `${mouseX}px`;
+            cursorDot.style.top  = `${mouseY}px`;
+
+            // Show if hidden
+            cursorDot.classList.remove('is-hidden');
+            cursorRing.classList.remove('is-hidden');
+
+            // ── Auto-detect background color under cursor ──
+            // Temporarily hide cursor so elementFromPoint doesn't pick it
+            cursorDot.style.display = 'none';
+            cursorRing.style.display = 'none';
+            const elUnder = document.elementFromPoint(mouseX, mouseY);
+            cursorDot.style.display = '';
+            cursorRing.style.display = '';
+
+            if (elUnder) {
+                const section = elUnder.closest(
+                    '[data-cursor-invert], #contact, .bg-coca-red'
+                );
+                if (section) {
+                    // Over purple/accent background → white cursor
+                    cursorDot.classList.add('is-inverted');
+                    cursorRing.classList.add('is-inverted');
+                    cursorDot.classList.remove('is-dark-inverted');
+                    cursorRing.classList.remove('is-dark-inverted');
+                } else {
+                    cursorDot.classList.remove('is-inverted');
+                    cursorRing.classList.remove('is-inverted');
+                    cursorDot.classList.remove('is-dark-inverted');
+                    cursorRing.classList.remove('is-dark-inverted');
+                }
+            }
+        });
+
+        // ── Smooth ring animation loop ──
+        function animateRing() {
+            // Lerp (linear interpolation) for trailing effect
+            ringX += (mouseX - ringX) * LERP;
+            ringY += (mouseY - ringY) * LERP;
+
+            cursorRing.style.left = `${ringX}px`;
+            cursorRing.style.top  = `${ringY}px`;
+
+            requestAnimationFrame(animateRing);
+        }
+        animateRing();
+
+        // ── Hover detection on interactive elements ──
+        const hoverTargets = document.querySelectorAll(
+            'a, button, input, textarea, select, [role="button"], .btn-primary, .project-showcase, .skill-card, .social-icon, .fmp-ctrl, .fmp-play, .fmp-toggle, .fmp-logo, .nav-link, .exp-row-header'
+        );
+
+        hoverTargets.forEach((el) => {
+            el.addEventListener('mouseenter', () => {
+                cursorDot.classList.add('is-hover');
+                cursorRing.classList.add('is-hover');
+            });
+            el.addEventListener('mouseleave', () => {
+                cursorDot.classList.remove('is-hover');
+                cursorRing.classList.remove('is-hover');
+            });
+        });
+
+        // ── Text input cursor (vertical bar) ──
+        const textTargets = document.querySelectorAll('input[type="text"], input[type="email"], textarea');
+        textTargets.forEach((el) => {
+            el.addEventListener('mouseenter', () => {
+                cursorDot.classList.add('is-text');
+                cursorRing.classList.add('is-text');
+            });
+            el.addEventListener('mouseleave', () => {
+                cursorDot.classList.remove('is-text');
+                cursorRing.classList.remove('is-text');
+            });
+        });
+
+        // ── Click feedback ──
+        document.addEventListener('mousedown', () => {
+            cursorDot.classList.add('is-click');
+            cursorRing.classList.add('is-click');
+        });
+        document.addEventListener('mouseup', () => {
+            cursorDot.classList.remove('is-click');
+            cursorRing.classList.remove('is-click');
+        });
+
+        // ── Hide when mouse leaves the window ──
+        document.addEventListener('mouseleave', () => {
+            cursorDot.classList.add('is-hidden');
+            cursorRing.classList.add('is-hidden');
+        });
+    }
+
+
+    /* ───────────────────────────────────────────
+       12. EXPERIENCE — Premium List with Hover Preview
+       ─ Click to expand/collapse details (accordion).
+       ─ Hover shows floating image preview (desktop).
+       ─ GSAP scroll-triggered stagger entrance.
+    ─────────────────────────────────────────── */
+
+    // ── Accordion toggle ──
+    const expRows = document.querySelectorAll('.exp-row');
+
+    expRows.forEach(row => {
+        const header = row.querySelector('.exp-row-header');
+        if (header) {
+            header.addEventListener('click', () => {
+                const isOpen = row.classList.contains('is-open');
+                // Close all other rows first
+                expRows.forEach(r => r.classList.remove('is-open'));
+                // Toggle current
+                if (!isOpen) row.classList.add('is-open');
+            });
+        }
+    });
+
+    // ── Floating image preview (desktop only) ──
+    const expPreview = document.getElementById('expImgPreview');
+    const expPreviewImg = document.getElementById('expPreviewImg');
+
+    if (expPreview && expPreviewImg && window.matchMedia('(pointer: fine)').matches) {
+        let prevTargetX = 0, prevTargetY = 0;
+        let prevCurrentX = 0, prevCurrentY = 0;
+
+        function lerpPreview() {
+            prevCurrentX += (prevTargetX - prevCurrentX) * 0.12;
+            prevCurrentY += (prevTargetY - prevCurrentY) * 0.12;
+            expPreview.style.left = prevCurrentX + 'px';
+            expPreview.style.top  = prevCurrentY + 'px';
+            requestAnimationFrame(lerpPreview);
+        }
+        lerpPreview();
+
+        expRows.forEach(row => {
+            row.addEventListener('mouseenter', () => {
+                const img = row.dataset.img;
+                if (img) {
+                    expPreviewImg.src = img;
+                    expPreview.classList.add('is-visible');
+                }
+            });
+
+            row.addEventListener('mouseleave', () => {
+                expPreview.classList.remove('is-visible');
+            });
+
+            row.addEventListener('mousemove', (e) => {
+                prevTargetX = e.clientX + 24;
+                prevTargetY = e.clientY - 100;
+            });
+        });
+    }
+
+    // ── GSAP Scroll-triggered stagger entrance ──
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Animate each row on scroll
+        expRows.forEach((row, i) => {
+            gsap.fromTo(row, {
+                opacity: 0,
+                y: 40,
+            }, {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: row,
+                    start: 'top 88%',
+                    toggleActions: 'play none none none',
+                },
+                delay: i * 0.05,
+            });
+        });
+
+        // Animate separator lines (draw from left)
+        document.querySelectorAll('.exp-separator').forEach((sep) => {
+            gsap.fromTo(sep, {
+                scaleX: 0,
+                transformOrigin: 'left center',
+            }, {
+                scaleX: 1,
+                duration: 0.8,
+                ease: 'power2.out',
+                scrollTrigger: {
+                    trigger: sep,
+                    start: 'top 90%',
+                    toggleActions: 'play none none none',
+                },
+            });
+        });
+
+        // Animate section header
+        const expHeader = document.querySelector('#experience .flex.flex-col');
+        if (expHeader) {
+            gsap.fromTo(expHeader, {
+                opacity: 0,
+                y: 60,
+            }, {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: expHeader,
+                    start: 'top 85%',
+                    toggleActions: 'play none none none',
+                },
+            });
+        }
+
+    } // end GSAP check
 
 });

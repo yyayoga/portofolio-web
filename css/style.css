@@ -13,6 +13,156 @@
 
 html {
     scroll-behavior: smooth;
+    cursor: none;   /* hide default cursor globally */
+}
+
+
+/* ═══════════════════════════════════════════
+   CUSTOM CURSOR — Phantom Purple Theme
+   ═══════════════════════════════════════════
+   • Small filled dot (inner) follows mouse exactly.
+   • Larger ring (outer) trails behind with smooth lerp.
+   • Both scale up when hovering interactive elements.
+   • Hidden on touch devices / small screens.
+   ═══════════════════════════════════════════ */
+
+/* ---- Inner dot ---- */
+.cursor-dot {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    background: #AF9FFF;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99999;
+    transform: translate(-50%, -50%);
+    transition: width 0.25s ease, height 0.25s ease, background 0.25s ease, opacity 0.2s ease;
+}
+
+/* ---- Outer ring ---- */
+.cursor-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 36px;
+    height: 36px;
+    border: 2px solid rgba(175, 159, 255, 0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99998;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease, background 0.3s ease, opacity 0.2s ease;
+}
+
+/* ---- Hover state: interactive elements ---- */
+.cursor-dot.is-hover {
+    width: 12px;
+    height: 12px;
+    background: #c4b8ff;
+}
+
+.cursor-ring.is-hover {
+    width: 50px;
+    height: 50px;
+    border-color: rgba(175, 159, 255, 0.8);
+    background: rgba(175, 159, 255, 0.08);
+}
+
+/* ---- Click state ---- */
+.cursor-dot.is-click {
+    width: 6px;
+    height: 6px;
+    background: #fff;
+}
+
+.cursor-ring.is-click {
+    width: 28px;
+    height: 28px;
+    border-color: #AF9FFF;
+}
+
+/* ---- Text input hover: vertical bar ---- */
+.cursor-dot.is-text {
+    width: 3px;
+    height: 22px;
+    border-radius: 2px;
+    background: #AF9FFF;
+}
+
+.cursor-ring.is-text {
+    opacity: 0;
+}
+
+/* ---- Hidden state (goes off-window / touch) ---- */
+.cursor-dot.is-hidden,
+.cursor-ring.is-hidden {
+    opacity: 0;
+}
+
+/* ---- Inverted state: for areas with matching purple/light bg ---- */
+.cursor-dot.is-inverted {
+    background: #ffffff;
+}
+
+.cursor-ring.is-inverted {
+    border-color: rgba(255, 255, 255, 0.6);
+}
+
+.cursor-dot.is-inverted.is-hover {
+    background: #ffffff;
+}
+
+.cursor-ring.is-inverted.is-hover {
+    border-color: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.cursor-dot.is-inverted.is-click {
+    background: #141218;
+}
+
+.cursor-ring.is-inverted.is-click {
+    border-color: #ffffff;
+}
+
+.cursor-dot.is-inverted.is-text {
+    background: #ffffff;
+}
+
+/* ---- Dark-inverted state: for white/light bg sections in light mode ---- */
+.cursor-dot.is-dark-inverted {
+    background: #1E1E1E;
+}
+
+.cursor-ring.is-dark-inverted {
+    border-color: rgba(30, 30, 30, 0.4);
+}
+
+.cursor-dot.is-dark-inverted.is-hover {
+    background: #1E1E1E;
+}
+
+.cursor-ring.is-dark-inverted.is-hover {
+    border-color: rgba(30, 30, 30, 0.7);
+    background: rgba(30, 30, 30, 0.06);
+}
+
+/* ---- Disable custom cursor on touch / small screens ---- */
+@media (pointer: coarse), (max-width: 768px) {
+    html {
+        cursor: auto;
+    }
+    .cursor-dot,
+    .cursor-ring {
+        display: none !important;
+    }
+}
+
+/* Restore pointer on interactive elements for accessibility */
+a, button, input, textarea, select, [role="button"], label {
+    cursor: none;
 }
 
 /* Remove focus outline for mouse users, keep for keyboard */
@@ -203,11 +353,312 @@ html {
 
 
 /* ═══════════════════════════════════════════
-   EXPERIENCE CARD TIMELINE DOT
+   EXPERIENCE — Premium List Layout
+   ═══════════════════════════════════════════
+   Inspired by awwwards-winning developer portfolios.
+   • Hover: floating image preview follows cursor.
+   • Click: expandable accordion reveals details.
+   • GSAP scroll-triggered stagger entrance.
    ═══════════════════════════════════════════ */
 
-.experience-card {
+/* ---- Floating image preview (desktop only) ---- */
+.exp-img-preview {
+    position: fixed;
+    width: 300px;
+    height: 200px;
+    border-radius: 14px;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0;
+    transform: scale(0.85) rotate(-2deg);
+    transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.18),
+                0 0 0 1px rgba(175, 159, 255, 0.15);
+}
+
+.exp-img-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.exp-img-preview.is-visible {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+}
+
+@media (pointer: coarse), (max-width: 768px) {
+    .exp-img-preview {
+        display: none !important;
+    }
+}
+
+/* ---- List container ---- */
+.exp-list-container {
+    border-top: 1px solid rgba(30, 30, 30, 0.1);
+}
+
+.dark .exp-list-container {
+    border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+/* ---- Separator line ---- */
+.exp-separator {
+    height: 1px;
+    background: rgba(30, 30, 30, 0.08);
+}
+
+.dark .exp-separator {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+/* ---- Experience Row ---- */
+.exp-row {
     position: relative;
+    border-bottom: 1px solid rgba(30, 30, 30, 0.08);
+    overflow: hidden;
+}
+
+.dark .exp-row {
+    border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+/* ---- Row Header (clickable) ---- */
+.exp-row-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem 0;
+    cursor: pointer;
+    transition: padding-left 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    gap: 1rem;
+}
+
+.exp-row:hover .exp-row-header {
+    padding-left: 1rem;
+}
+
+.exp-row-left {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    min-width: 0;
+}
+
+/* ---- Number ---- */
+.exp-row-num {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #AF9FFF;
+    opacity: 0.4;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+    transition: opacity 0.3s;
+}
+
+.exp-row:hover .exp-row-num {
+    opacity: 1;
+}
+
+/* ---- Info block ---- */
+.exp-row-info {
+    min-width: 0;
+}
+
+.exp-row-role {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #1E1E1E;
+    line-height: 1.3;
+    transition: color 0.3s;
+}
+
+.dark .exp-row-role {
+    color: #f5f5f5;
+}
+
+.exp-row:hover .exp-row-role {
+    color: #AF9FFF;
+}
+
+.exp-row-company {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: rgba(30, 30, 30, 0.45);
+    margin-top: 0.15rem;
+}
+
+.dark .exp-row-company {
+    color: rgba(255, 255, 255, 0.35);
+}
+
+/* ---- Right side ---- */
+.exp-row-right {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    flex-shrink: 0;
+}
+
+.exp-row-period {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: rgba(30, 30, 30, 0.4);
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+}
+
+.dark .exp-row-period {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* ---- Toggle button ---- */
+.exp-row-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba(30, 30, 30, 0.12);
+    color: rgba(30, 30, 30, 0.4);
+    font-size: 0.8rem;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    flex-shrink: 0;
+}
+
+.dark .exp-row-toggle {
+    border-color: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.exp-row:hover .exp-row-toggle {
+    border-color: #AF9FFF;
+    color: #AF9FFF;
+    background: rgba(175, 159, 255, 0.06);
+}
+
+.exp-row.is-open .exp-row-toggle {
+    transform: rotate(45deg);
+    border-color: #AF9FFF;
+    color: #AF9FFF;
+    background: rgba(175, 159, 255, 0.1);
+}
+
+/* ---- Expandable Body ---- */
+.exp-row-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.exp-row.is-open .exp-row-body {
+    max-height: 400px;
+}
+
+.exp-row-body-inner {
+    display: flex;
+    gap: 2rem;
+    padding: 0 0 2rem 0;
+    padding-left: 3.3rem;    /* align with text after number */
+    align-items: flex-start;
+}
+
+/* ---- Description list ---- */
+.exp-row-desc {
+    flex: 1;
+    min-width: 0;
+}
+
+.exp-row-desc ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.exp-row-desc li {
+    position: relative;
+    padding-left: 1.2rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.65;
+    color: rgba(30, 30, 30, 0.6);
+}
+
+.dark .exp-row-desc li {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.exp-row-desc li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55rem;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #AF9FFF;
+    opacity: 0.5;
+}
+
+/* ---- Inline thumbnail ---- */
+.exp-row-thumb {
+    width: 200px;
+    height: 140px;
+    border-radius: 10px;
+    overflow: hidden;
+    flex-shrink: 0;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.exp-row-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* ---- Experience — Mobile Responsive ---- */
+@media (max-width: 768px) {
+    .exp-row-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 1.5rem 0;
+    }
+
+    .exp-row-right {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .exp-row-role {
+        font-size: 1.1rem;
+    }
+
+    .exp-row-body-inner {
+        flex-direction: column;
+        padding-left: 0;
+    }
+
+    .exp-row-thumb {
+        width: 100%;
+        height: 180px;
+    }
+
+    .exp-row:hover .exp-row-header {
+        padding-left: 0;
+    }
 }
 
 
