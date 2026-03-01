@@ -289,17 +289,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const musicExpandIcon = document.getElementById('music-expand-icon');
     const musicPrev = document.getElementById('music-prev');
     const musicNext = document.getElementById('music-next');
+    const musicTrackArtist = document.getElementById('music-track-artist');
 
     // ── Playlist: tambah / hapus lagu di sini ──
     const playlist = [
-        { title: 'But If You Go',    src: 'assets/But If You Go - Nathaniel Constantin.mp3' },
-        { title: 'I Dont Love You',  src: 'assets/I Dont Love You - My Chemical Romance.mp3' },
-        { title: 'Hurricane',        src: 'assets/Hurricane - I Prevail.mp3' },
-        { title: 'Ruin The Friendship', src: 'assets/Ruin The Friendship.mp3' },
-        { title: 'Teardrops',        src: 'assets/Teardrops - Bring Me the Horizon.mp3' },
-        { title: 'Waiting Room',     src: 'assets/Waiting Room - Phoebe Bridgers.mp3' },
-        { title: 'xx',               src: 'assets/xx - The Millenial Club.mp3' },
-        { title: 'Enchanted',        src: 'assets/Taylor Swift - Enchanted.mp3' },
+        { title: 'But If You Go',       artist: 'Nathaniel Constantin',  src: 'assets/But If You Go - Nathaniel Constantin.mp3' },
+        { title: 'I Dont Love You',     artist: 'My Chemical Romance',   src: 'assets/I Dont Love You - My Chemical Romance.mp3' },
+        { title: 'Hurricane',            artist: 'I Prevail',             src: 'assets/Hurricane - I Prevail.mp3' },
+        { title: 'Ruin The Friendship',  artist: 'Taylor Swift',           src: 'assets/Ruin The Friendship.mp3' },
+        { title: 'Teardrops',            artist: 'Bring Me the Horizon',  src: 'assets/Teardrops - Bring Me the Horizon.mp3' },
+        { title: 'Waiting Room',         artist: 'Phoebe Bridgers',       src: 'assets/Waiting Room - Phoebe Bridgers.mp3' },
+        { title: 'xx',                   artist: 'The Millenial Club',    src: 'assets/xx - The Millenial Club.mp3' },
+        { title: 'Enchanted',            artist: 'Taylor Swift',          src: 'assets/Taylor Swift - Enchanted.mp3' },
     ];
 
     let currentTrackIndex = 0;
@@ -313,6 +314,7 @@ document.addEventListener('DOMContentLoaded', () => {
         floatingAudio.src = track.src;
         floatingAudio.load();
         if (musicTrackName) musicTrackName.textContent = track.title;
+        if (musicTrackArtist) musicTrackArtist.textContent = track.artist;
     }
 
     function syncFloatingPlayerUI(isPlaying) {
@@ -375,6 +377,100 @@ document.addEventListener('DOMContentLoaded', () => {
             const wasPlaying = floatingAudio && !floatingAudio.paused;
             loadTrack(currentTrackIndex + 1);
             if (wasPlaying) playCurrentTrack();
+        });
+    }
+
+    /* — Progress bar — */
+
+    const fmpProgressBar = document.getElementById('fmp-progress-bar');
+    const fmpProgressFilled = document.getElementById('fmp-progress-filled');
+    const fmpProgressThumb = document.getElementById('fmp-progress-thumb');
+    const fmpTimeCurrent = document.getElementById('fmp-time-current');
+    const fmpTimeDuration = document.getElementById('fmp-time-duration');
+    let isDraggingProgress = false;
+
+    function formatTime(seconds) {
+        if (!seconds || isNaN(seconds)) return '0:00';
+        const m = Math.floor(seconds / 60);
+        const s = Math.floor(seconds % 60);
+        return m + ':' + (s < 10 ? '0' : '') + s;
+    }
+
+    function setProgress(pct) {
+        const clamped = Math.max(0, Math.min(100, pct));
+        if (fmpProgressFilled) fmpProgressFilled.style.width = clamped + '%';
+        if (fmpProgressThumb) fmpProgressThumb.style.left = clamped + '%';
+    }
+
+    if (floatingAudio) {
+        floatingAudio.addEventListener('timeupdate', () => {
+            if (isDraggingProgress) return;
+            const dur = floatingAudio.duration || 0;
+            const cur = floatingAudio.currentTime || 0;
+            const pct = dur ? (cur / dur) * 100 : 0;
+            setProgress(pct);
+            if (fmpTimeCurrent) fmpTimeCurrent.textContent = formatTime(cur);
+        });
+
+        floatingAudio.addEventListener('loadedmetadata', () => {
+            if (fmpTimeDuration) fmpTimeDuration.textContent = formatTime(floatingAudio.duration);
+            setProgress(0);
+            if (fmpTimeCurrent) fmpTimeCurrent.textContent = '0:00';
+        });
+
+        floatingAudio.addEventListener('durationchange', () => {
+            if (fmpTimeDuration) fmpTimeDuration.textContent = formatTime(floatingAudio.duration);
+        });
+    }
+
+    function seekToPosition(e) {
+        if (!fmpProgressBar || !floatingAudio || !floatingAudio.duration) return;
+        const rect = fmpProgressBar.getBoundingClientRect();
+        const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+        const pct = Math.max(0, Math.min(1, x / rect.width));
+        floatingAudio.currentTime = pct * floatingAudio.duration;
+        setProgress(pct * 100);
+        if (fmpTimeCurrent) fmpTimeCurrent.textContent = formatTime(floatingAudio.currentTime);
+    }
+
+    if (fmpProgressBar) {
+        // Click to seek
+        fmpProgressBar.addEventListener('click', seekToPosition);
+
+        // Drag to seek (mouse)
+        fmpProgressBar.addEventListener('mousedown', (e) => {
+            isDraggingProgress = true;
+            fmpProgressBar.classList.add('is-dragging');
+            seekToPosition(e);
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDraggingProgress) return;
+            seekToPosition(e);
+        });
+
+        document.addEventListener('mouseup', () => {
+            if (!isDraggingProgress) return;
+            isDraggingProgress = false;
+            fmpProgressBar.classList.remove('is-dragging');
+        });
+
+        // Drag to seek (touch)
+        fmpProgressBar.addEventListener('touchstart', (e) => {
+            isDraggingProgress = true;
+            fmpProgressBar.classList.add('is-dragging');
+            seekToPosition(e);
+        }, { passive: true });
+
+        document.addEventListener('touchmove', (e) => {
+            if (!isDraggingProgress) return;
+            seekToPosition(e);
+        }, { passive: true });
+
+        document.addEventListener('touchend', () => {
+            if (!isDraggingProgress) return;
+            isDraggingProgress = false;
+            fmpProgressBar.classList.remove('is-dragging');
         });
     }
 
